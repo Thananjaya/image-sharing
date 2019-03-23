@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import LoginForm, RegistrationForm, UserEditForm, ProfileEditForm
+from django.contrib import messages
 
 
 @login_required
@@ -49,11 +50,13 @@ def edit(request):
 		if user_form.is_valid() and profile_form.is_valid():
 			user_form.save()
 			profile_form.save()
-			return render(request, 'account/dashboard.html')
+			messages.success(request, 'Profile successfully updated!!')
+		else:
+			messages.error(request, 'Profile not been updated successfully!!')			
 	else:
-		user_form = UserEditForm()
-		profile_form = ProfileEditForm()
-		return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
+		user_form = UserEditForm(instance= request.user)
+		profile_form = ProfileEditForm(instance= request.user.profile)
+	return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
 
 
 # just implemented to study how django authentication works
