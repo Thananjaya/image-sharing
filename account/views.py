@@ -7,11 +7,33 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm
+from .forms import LoginForm, RegistrationForm
 
 @login_required
 def dashboard(request):
+	"""
+		View for successfully redirecting the dashboard after successfull sign-in
+	"""
 	return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+
+def registration(request):
+	"""
+		View for registering a new user
+
+		arguements:
+			request: an http request method
+	"""
+	if request.method == 'POST':
+		registration_form = RegistrationForm(request.POST)
+		if registration_form.is_valid():
+			data = registration_form.cleaned_data
+			new_user = registration_form.save(commit= False)
+			new_user.set_password(data['password'])
+			new_user.save()
+			return render(request, 'account/registration_successfull.html', {'new_user': new_user, 'cleaned_data': data, 'form': registration_form})
+	else:
+		registration_form = RegistrationForm()
+		return render(request, 'account/registration_form.html', {'form': registration_form})
 
 # to study how django authentication works
 # def login(request):
