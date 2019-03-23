@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
 
 # Application definition
 
@@ -81,6 +85,11 @@ DATABASES = {
     }
 }
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'thananthanan@gmail.com'
+EMAIL_HOST_PASSWORD = 'stctharuntheboss'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

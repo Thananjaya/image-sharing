@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %} Image 'O' Gram Login {% endblock %}
 
 {% block content %}
@@ -15,5 +15,6 @@
 			<input type="hidden" value="{{ next }}" name="next" />
 			<p><input type="submit" value="Login" /></p>
 		</form>
+		<p><a href="{% url 'password_reset' %}">Forgotten Your password?</a></p>
 	</div>	 
 {% endblock %}

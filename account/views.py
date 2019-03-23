@@ -6,29 +6,35 @@
 """
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
 
-def login(request):
-	"""
-		View for user login
+@login_required
+def dashboard(request):
+	return render(request, 'account/dashboard.html', {'section': 'dashboard'})
 
-		arguements:
-			request: it takes an http request, which should be POST
-	"""
-	if request.method == 'POST':
-		login_form = LoginForm(request.POST)
-		if login_form.is_valid():
-			data = login_form.cleaned_data
-			user = authenticate(request, username = data['username'], password = data['password'])
-			if user is not None:
-				if user.is_active:
-					login(request, user)
-					return HttpResponse('user successfully signed in')
-				else:
-					return HttpResponse('user is disabled')
-			else:
-				return HttpResponse('Invalid user')
-	else:
-		login_form = LoginForm()
-	return render(request, 'account/login.html', {'form': login_form})
+# to study how django authentication works
+# def login(request):
+# 	"""
+# 		View for user login
+
+# 		arguements:
+# 			request: it takes an http request, which should be POST
+# 	"""
+# 	if request.method == 'POST':
+# 		login_form = LoginForm(request.POST)
+# 		if login_form.is_valid():
+# 			data = login_form.cleaned_data
+# 			user = authenticate(request, username = data['username'], password = data['password'])
+# 			if user is not None:
+# 				if user.is_active:
+# 					login(request, user)
+# 					return HttpResponse('user successfully signed in')
+# 				else:
+# 					return HttpResponse('user is disabled')
+# 			else:
+# 				return HttpResponse('Invalid user')
+# 	else:
+# 		login_form = LoginForm()
+# 	return render(request, 'account/login.html', {'form': login_form})
+
