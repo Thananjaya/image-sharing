@@ -25,7 +25,7 @@ SECRET_KEY = 'e0kzr_m$2lj@_vb8t4pkjy8tmprwkygasubfpxx-$qt$1gg0-a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['6d6dc183.ngrok.io']
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
