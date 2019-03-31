@@ -35,7 +35,7 @@ class ImageCreationForm(forms.ModelForm):
 			description = self.cleaned_data['description']
 			name = '{}.{}'.format(slugify(self.title), url.rsplit('.', 1)[1].lower())
 			image_file = request.urlopen(url)
-			# image.image.save(name, ContentFile(image_file.read()) , save=False)
+			image.image.save(name, ContentFile(image_file.read()) , save=False)
 			if commit:
-				image.save(name, description, ContentFile(image_file.read()))
+				image.save()
 			return image
