@@ -30,7 +30,9 @@ def registration(request):
 		registration_form = RegistrationForm(request.POST)
 		if registration_form.is_valid():
 			data = registration_form.cleaned_data
+			# returning an instance, instead of saving the data to the database
 			new_user = registration_form.save(commit= False)
+			#setting the password to the database
 			new_user.set_password(data['password'])
 			new_user.save()
 			return render(request, 'account/registration_successfull.html', {'new_user': new_user, 'cleaned_data': data, 'form': registration_form})
