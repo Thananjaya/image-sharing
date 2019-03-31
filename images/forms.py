@@ -5,11 +5,12 @@ from django.utils.text import slugify
 from .models import Image
 
 class ImageCreationForm(forms.ModelForm):
-	class meta:
+
+	class Meta:
 		model = Image
 		fields = ('title', 'description', 'url')
 		widgets = {
-			'url': 'forms.HiddenInput'
+			'url': forms.HiddenInput
 		}
 
 		def clean_url(self):
@@ -31,10 +32,10 @@ class ImageCreationForm(forms.ModelForm):
 			"""
 			image = super(ImageCreationForm, self).save(commit= False)
 			url = self.cleaned_data['url']
+			description = self.cleaned_data['description']
 			name = '{}.{}'.format(slugify(self.title), url.rsplit('.', 1)[1].lower())
 			image_file = request.urlopen(url)
 			# image.image.save(name, ContentFile(image_file.read()) , save=False)
 			if commit:
-				image.save()
+				image.save(name, description, ContentFile(image_file.read()))
 			return image
-			

@@ -8,7 +8,7 @@ def image_create(request):
 	if request.method == 'POST':
 		image_creation_form = ImageCreationForm(request.POST)
 		if image_creation_form.is_valid():
-			data = self.cleaned_data
+			data = image_creation_form.cleaned_data
 			new_image = data.save(commit=False)
 			new_image.user = request.user
 			new_image.save()
